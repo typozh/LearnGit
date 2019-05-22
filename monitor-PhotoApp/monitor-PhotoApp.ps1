@@ -4,8 +4,8 @@ $InformationPreference = "Continue"
 $PhotoAppProcessName = "Microsoft.Photos"
 $WaitSeconds = 10
 $StartPhotoAppCommand = "start ms-photos:"
-$RestartAppAfter = 3600
-
+$RestartAppAfter = 9000
+$RestartApp = $false
 $RestartCount = 0
 do {
     $PhotoAppProcess = get-process -Name $PhotoAppProcessName -ErrorAction SilentlyContinue
@@ -30,7 +30,7 @@ do {
         Write-Information ("Restarted App " + $RestartCount + " times")
         Write-Information ("Press Ctrl+F5 to stop this script")
 
-        if($RestartAppAfter -le $Duration.TotalSeconds) {
+        if($RestartAppAfter -le $Duration.TotalSeconds -and $RestartApp -eq $true) {
             $PhotoAppProcess.Kill()
             Write-Information ("Closing Photo App now")
         }
